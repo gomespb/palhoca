@@ -89,22 +89,13 @@
     <a href="https://script.google.com/macros/s/AKfycbwWWUJqWmeB2QulThP5rSfVdI6EuoXtdZ25STKrYDjNtLuR8wCDPH_L3vEDThUEKyx9/exec" class="botao">Cadastrar</a>
   </div>
 
-  <!-- MOBILE -->
-  <div class="cards" id="cards"></div>
-
-  <!-- PC -->
+ <div class="cards" id="cards"></div>
   <table>
     <thead>
-      <tr>
-        <th>Data</th>
-        <th>Barbeiro</th>
-        <th>FormaPG</th>
-        <th>Valor</th>
-      </tr>
+      <tr><th>Data</th><th>Barbeiro</th><th>FormaPG</th><th>Valor</th></tr>
     </thead>
     <tbody id="tabela"></tbody>
   </table>
-
 </div>
 
 <script>
@@ -123,33 +114,12 @@ function parseDataBR(dataStr) {
 
 function formatarValor(v) {
   const num = parseFloat(v) || 0;
-
-  if (num === 1 || num === 2 || num === 3) {
-    return { texto: num, classe: "destaque" };
-  }
-
-  return {
-    texto: num.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    }),
-    classe: "valor"
-  };
+  if (num === 1 || num === 2 || num === 3) return { texto: num, classe: "destaque" };
+  return { texto: num.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }), classe: "valor" };
 }
 
 function bloquearTela(msg) {
-  document.body.innerHTML = `
-    <div style="
-      display:flex;
-      height:100vh;
-      align-items:center;
-      justify-content:center;
-      background:#0b0f1a;
-      color:#fff;
-    ">
-      <h2>${msg}</h2>
-    </div>
-  `;
+  document.body.innerHTML = `<div style="display:flex; height:100vh; align-items:center; justify-content:center; background:#0b0f1a; color:#fff;"><h2>${msg}</h2></div>`;
 }
 
 function carregarDados() {
@@ -161,67 +131,33 @@ function carregarDados() {
     return;
   }
 
-  // Usuários autorizados ao menu especial
-  const autorizados = [
-    "eduardoesper110526"
-  ];
-
-  // Exibe o menu especial apenas para os autorizados
+  // Lista de autorizados para o Menu Especial
+  const autorizados = ['joseven1811']; 
   if (autorizados.includes(acesso)) {
-    document.getElementById("menu-especial").style.display = "flex";
+    document.getElementById('menu-especial').style.display = 'flex';
   }
 
   fetch(SCRIPT_URL + "?acesso=" + acesso)
     .then(res => res.json())
     .then(dados => {
-
-      if (dados.erro) {
-        bloquearTela("Acesso negado");
-        return;
-      }
-
-      dados.forEach(item => {
-        item.dataObj = parseDataBR(item.data);
-      });
-
-      dados.sort((a, b) => b.dataObj - a.dataObj);
-
-      document.getElementById("atualizacao").innerText =
-        "Atualizado: " + new Date().toLocaleTimeString("pt-BR");
-
-      let htmlCards = "";
-      let htmlTabela = "";
-
+      if (dados.erro) { bloquearTela("Acesso negado"); return; }
+      dados.forEach(item => { item.dataObj = parseDataBR(item.data); });
+      dados.sort((a,b) => b.dataObj - a.dataObj);
+      
+      document.getElementById("atualizacao").innerText = "Atualizado: " + new Date().toLocaleTimeString("pt-BR");
+      
+      let htmlCards = "", htmlTabela = "";
       dados.forEach(item => {
         const v = formatarValor(item.valor);
-
-        htmlCards += `
-          <div class="card">
-            <div class="linha"><span>Data:</span><span>${item.data}</span></div>
-            <div class="linha"><span>Barbeiro:</span><strong>${item.barbeiro}</strong></div>
-            <div class="linha"><span>Forma:</span><span>${item.forma}</span></div>
-            <div class="linha"><span>Valor:</span><span class="${v.classe}">${v.texto}</span></div>
-          </div>
-        `;
-
-        htmlTabela += `
-          <tr>
-            <td>${item.data}</td>
-            <td>${item.barbeiro}</td>
-            <td>${item.forma}</td>
-            <td class="${v.classe}">${v.texto}</td>
-          </tr>
-        `;
+        htmlCards += `<div class="card"><div class="linha"><span>Data:</span><span>${item.data}</span></div><div class="linha"><span>Barbeiro:</span><strong>${item.barbeiro}</strong></div><div class="linha"><span>Forma:</span><span>${item.forma}</span></div><div class="linha"><span>Valor:</span><span class="${v.classe}">${v.texto}</span></div></div>`;
+        htmlTabela += `<tr><td>${item.data}</td><td>${item.barbeiro}</td><td>${item.forma}</td><td class="${v.classe}">${v.texto}</td></tr>`;
       });
-
       document.getElementById("cards").innerHTML = htmlCards;
       document.getElementById("tabela").innerHTML = htmlTabela;
-
     })
-    .catch(() => {
-      bloquearTela("Erro ao carregar");
-    });
+    .catch(() => { bloquearTela("Erro ao carregar"); });
 }
+
 setInterval(carregarDados, 10000);
 carregarDados();
 </script>
