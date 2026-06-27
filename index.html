@@ -7,118 +7,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #0b0f1a;
-    color: #fff;
-  }
+  body { font-family: Arial, sans-serif; margin: 0; background: #0b0f1a; color: #fff; }
+  header { background: #111827; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; }
+  .container { padding: 10px; max-width: 1100px; margin: auto; }
+  .topo { display: flex; justify-content: flex-end; margin-bottom: 10px; font-size: 14px; }
 
-  header {
-    background: #111827;
-    padding: 15px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  .container {
-    padding: 10px;
-    max-width: 1100px;
-    margin: auto;
-  }
-
-  .topo {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-
-  /* 🔘 MENU */
-  .menu {
-    margin-bottom: 15px;
-  }
-
-  .botao {
-    display: block;
+  /* 🔘 MENU E BOTÕES */
+  .menu { margin-bottom: 8px; }
+  .menu-grid { 
+    display: none; 
+    gap: 8px; /* Reduzi levemente o gap para garantir alinhamento */
+    margin-bottom: 15px; 
     width: 100%;
-    padding: 14px;
-    margin: 8px 0;
-    background: linear-gradient(135deg, #19a7ce, #146c94);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    transition: 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .botao { 
+    display: block; 
+    width: 100%; 
+    padding: 14px 0; 
+    margin: 8px 0; 
+    background: linear-gradient(135deg, #19a7ce, #146c94); 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 10px; 
+    text-align: center; 
+    font-weight: bold; 
+    transition: 0.2s; 
+    box-sizing: border-box; /* Crucial para o alinhamento */
+  }
+  
+  .menu-grid .botao { 
+    flex: 1; 
+    margin: 0; /* Remove margem que causava desalinhamento */
+    padding: 14px 5px; 
+    font-size: 13px; 
   }
 
-  .botao:hover {
-    transform: scale(1.03);
-  }
+  .botao:hover { transform: scale(1.03); }
 
   /* 🔥 TABELA */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-
-  th, td {
-    padding: 10px;
-    border-bottom: 1px solid #333;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  th {
-    background: #111827;
-    font-weight: bold;
-  }
-
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { padding: 10px; border-bottom: 1px solid #333; text-align: left; white-space: nowrap; }
+  th { background: #111827; font-weight: bold; }
   th:nth-child(1), td:nth-child(1) { width: 30%; }
   th:nth-child(2), td:nth-child(2) { width: 25%; }
   th:nth-child(3), td:nth-child(3) { width: 25%; }
-  th:nth-child(4), td:nth-child(4) { 
-    width: 20%; 
-    text-align: right;
-  }
+  th:nth-child(4), td:nth-child(4) { width: 20%; text-align: right; }
+  .valor { color: #22c55e; font-weight: bold; text-align: right; }
+  .destaque { color: #f59e0b; font-weight: bold; text-align: right; }
 
-  .valor {
-    color: #22c55e;
-    font-weight: bold;
-    text-align: right;
-  }
-
-  .destaque {
-    color: #f59e0b;
-    font-weight: bold;
-    text-align: right;
-  }
-
-  /* MOBILE */
   @media (max-width: 699px) {
     table { display: none; }
-
-    .card {
-      background: #111827;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .linha {
-      display: flex;
-      justify-content: space-between;
-      margin: 4px 0;
-    }
+    .card { background: #111827; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+    .linha { display: flex; justify-content: space-between; margin: 4px 0; }
   }
-
-  /* PC */
-  @media (min-width: 700px) {
-    .cards { display: none; }
-  }
+  @media (min-width: 700px) { .cards { display: none; } }
 </style>
 </head>
 
